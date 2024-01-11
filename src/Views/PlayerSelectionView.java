@@ -24,7 +24,7 @@ public class PlayerSelectionView {
         } else if (player == PlayerOption.Bot_Player.getValue()) {
             getBotDetails();
         } else {
-            System.out.println("Invalid number. Please enter 1 for Player or 2 for Bot\n");
+            System.out.println("Invalid number. Please enter 1 for Human Player or 2 for Bot\n");
             selectPlayer(playerNumber);
         }
     }
@@ -39,8 +39,21 @@ public class PlayerSelectionView {
     private void getBotDetails() {
         System.out.println();
         System.out.println("Choose the Bot difficulty:\n1. Easy\n2. Medium\n3. Hard");
-        int difficulty = scanner.nextInt();
-        controller.createBotPlayer(difficulty);
+        try {
+            int difficulty = scanner.nextInt();
+
+            if (difficulty <= 3 && difficulty >= 1) {
+                controller.createBotPlayer(difficulty);
+            } else {
+                System.out.println("Invalid number. Please enter 1, 2, or 3 based on your preference of difficulty");
+                scanner.nextLine();
+                getBotDetails();
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please try again.");
+            scanner.nextLine();
+            getBotDetails();
+        }
     }
 
     private void selectionText(int playerNumber) {

@@ -10,13 +10,18 @@ import models.players.Difficulty;
 import models.players.HumanPlayer;
 import models.players.Player;
 
+import java.util.Scanner;
+
 public class TicTacToeController {
     private Game game;
     private Player player1;
     private Player player2;
-    private final GamePlayView gameView = new GamePlayView();
+    private final GamePlayView gameView;
     private Player currentPlayer;
 
+    public TicTacToeController(Scanner scanner) {
+        this.gameView = new GamePlayView(scanner);
+    }
 
     public void startGame() {
         this.game = new Game();

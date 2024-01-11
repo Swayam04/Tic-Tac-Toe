@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class GameController {
 
     public void  initiateGame() {
-        TicTacToeController ticTacToeController = new TicTacToeController();
         Scanner scanner = new Scanner(System.in);
+        TicTacToeController ticTacToeController = new TicTacToeController(scanner);
         StartView startView = new StartView(ticTacToeController, scanner);
         startView.displayStartView();
     }
