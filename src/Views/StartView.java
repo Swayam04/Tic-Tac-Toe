@@ -1,7 +1,9 @@
 package Views;
 
 import Controller.TicTacToeController;
+import Views.Enums.StartMenuOption;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class StartView {
@@ -9,29 +11,49 @@ public class StartView {
     private final PlayerSelectionView setupGame;
     private final TicTacToeController controller;
 
-    public  StartView() {
-        this.scanner = new Scanner(System.in);
-        this.setupGame = new PlayerSelectionView();
-        this.controller = new TicTacToeController();
+    public  StartView(TicTacToeController controller, Scanner scanner) {
+        this.scanner = scanner;
+        this.controller = controller;
+        this.setupGame = new PlayerSelectionView(controller, scanner);
     }
 
     public void displayStartView() {
         System.out.println("Tic Tac Toe\n");
         System.out.println("Please choose an option");
-        System.out.println("1. Start Game");
-        System.out.println("2. Exit");
+        System.out.println(StartMenuOption.START_GAME.getValue() +". Start Game");
+        System.out.println(StartMenuOption.EXIT.getValue() + ". Exit");
 
         int option = scanner.nextInt();
 
-        if (option == 2) {
-            System.out.println("Thank you!");
-            System.exit(0);
-        } else {
-            System.out.println();
+        try {
+            if (option == StartMenuOption.EXIT.getValue()) {
+                System.out.println("Thank you!");
+                System.exit(0);
+            } else if(option == StartMenuOption.START_GAME.getValue()) {
+                startPlayerSelection();
+            } else {
+                System.out.println("Invalid option. Please enter either 1 or 0\n");
+                scanner.nextLine();
+                displayStartView();
+            }
+        } catch(InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number\n");
+            scanner.nextLine();
+            displayStartView();
+        }
+    }
+
+    private void startPlayerSelection() {
+        System.out.println();
+        try {
             setupGame.selectPlayer(1);
             System.out.println();
             setupGame.selectPlayer(2);
             controller.startGame();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input during player selection. Please try again.");
+            scanner.nextLine();
+            startPlayerSelection();
         }
     }
 }

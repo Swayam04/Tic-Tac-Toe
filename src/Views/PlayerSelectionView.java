@@ -1,25 +1,31 @@
 package Views;
 
 import Controller.TicTacToeController;
+import Views.Enums.PlayerOption;
+import models.players.HumanPlayer;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PlayerSelectionView {
     private final Scanner scanner;
-    private TicTacToeController controller;
+    private final TicTacToeController controller;
 
-    public PlayerSelectionView() {
-        this.scanner = new Scanner(System.in);
-        controller = new TicTacToeController();
+    public PlayerSelectionView(TicTacToeController controller, Scanner scanner) {
+        this.scanner = scanner;
+        this.controller = controller;
     }
 
     public void selectPlayer(int playerNumber) {
         selectionText(playerNumber);
         int player = scanner.nextInt();
-        if (player == 1) {
+        if (player == PlayerOption.Human_Player.getValue()) {
             getPlayerDetails();
-        } else {
+        } else if (player == PlayerOption.Bot_Player.getValue()) {
             getBotDetails();
+        } else {
+            System.out.println("Invalid number. Please enter 1 for Player or 2 for Bot\n");
+            selectPlayer(playerNumber);
         }
     }
 
@@ -39,7 +45,8 @@ public class PlayerSelectionView {
 
     private void selectionText(int playerNumber) {
         System.out.println("Select Player Type for Player " + playerNumber + ":");
-        System.out.println("1. Human\n2. Bot");
+        System.out.println(PlayerOption.Human_Player.getValue() + ". Human");
+        System.out.println(PlayerOption.Bot_Player.getValue() + ". Bot");
     }
 
 }

@@ -1,26 +1,25 @@
 package models.game;
 
 import models.board.Board;
+import models.board.Cell;
 import models.board.CellState;
 import models.players.Player;
 import models.strategies.WinnerChecker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private final Player player1;
-    private final Player player2;
     private final Board board;
     private List<Move> moves;
     private GameState state;
     private final WinnerChecker winnerChecker;
 
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public Game() {
         this.board = new Board();
         this.state = GameState.In_Progress;
         this.winnerChecker = new WinnerChecker();
+        this.moves = new ArrayList<>();
     }
 
     public void printBoard() {
@@ -38,23 +37,33 @@ public class Game {
         return  false;
     }
 
-    public boolean checkWinner(Board board, Move move) {
-        return winnerChecker.checkWinner(board, move);
+    public boolean checkWinner(Move move) {
+        return winnerChecker.checkWinner(this.board, move);
     }
 
-    public void makeMove() {
+    public void makePlayerMove(Move move) {
+        Cell cell = move.getCell();
+        cell.setPlayer(move.getPlayer());
+        cell.setState(CellState.FILLED);
+        moves.add(move);
+        if (checkWinner(move)) {
+            state = GameState.Win;
+        }
+        if (moves.size() == this.board.getSize() * this.board.getSize()) {
+            state = GameState.Draw;
+        }
+    }
+
+    public void makeBotMove() {
 
     }
 
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
-    }
 
     public GameState getState() {
         return state;
+    }
+
+    public List<List<Cell>> getBoard() {
+        return board.getBoard();
     }
 }
