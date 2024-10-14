@@ -1,6 +1,6 @@
 package org.example.tictactoe.controllers;
 
-import org.example.tictactoe.Views.StartView;
+import org.example.tictactoe.views.StartView;
 
 import java.util.Scanner;
 

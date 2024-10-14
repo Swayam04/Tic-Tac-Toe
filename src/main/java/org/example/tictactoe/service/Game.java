@@ -7,8 +7,6 @@ import org.example.tictactoe.entities.game.GameState;
 import org.example.tictactoe.entities.game.Move;
 import org.example.tictactoe.entities.players.BotPlayer;
 import org.example.tictactoe.strategies.WinnerChecker;
-import org.example.tictactoe.strategies.botstrategies.BotStrategy;
-import org.example.tictactoe.strategies.botstrategies.BotStrategyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ public class Game {
     private final List<Move> moves;
     private GameState state;
     private final WinnerChecker winnerChecker;
-    private BotStrategy botStrategy;
 
     public Game() {
         this.board = new Board();
@@ -44,7 +41,7 @@ public class Game {
     }
 
     public boolean checkWinner(Move move) {
-        return winnerChecker.checkWinner(this.board, move.getCell(), move.getPlayer().getSymbol());
+        return winnerChecker.checkWinner(this.board, move.getCell(), move.getPlayer().getSymbol(),false);
     }
 
     public void makePlayerMove(Move move) {
@@ -59,8 +56,8 @@ public class Game {
         }
     }
 
-    public void makeBotMove() {
-        Move move = botStrategy.calculateNextMove(board);
+    public void makeBotMove(BotPlayer botPlayer) {
+        Move move = botPlayer.getStrategy(winnerChecker).calculateNextMove(this.board);
         makePlayerMove(move);
     }
 
@@ -71,13 +68,5 @@ public class Game {
 
     public List<List<Cell>> getBoard() {
         return board.getBoard();
-    }
-
-    public void setBotStrategy(BotPlayer botPlayer) {
-        botStrategy = BotStrategyFactory.createBotStrategy(botPlayer);
-    }
-
-    public BotStrategy getBotStrategy() {
-        return botStrategy;
     }
 }

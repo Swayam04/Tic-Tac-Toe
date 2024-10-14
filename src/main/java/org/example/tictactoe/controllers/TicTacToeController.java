@@ -1,6 +1,6 @@
 package org.example.tictactoe.controllers;
 
-import org.example.tictactoe.Views.GamePlayView;
+import org.example.tictactoe.views.GamePlayView;
 import org.example.tictactoe.service.Game;
 import org.example.tictactoe.entities.game.GameState;
 import org.example.tictactoe.entities.game.Move;
@@ -45,10 +45,7 @@ public class TicTacToeController {
                 game.makePlayerMove(move);
             } else {
                 BotPlayer botPlayer = (BotPlayer) currentPlayer;
-                if(game.getBotStrategy() == null) {
-                    game.setBotStrategy(botPlayer);
-                }
-                game.makeBotMove();
+                game.makeBotMove(botPlayer);
             }
             currentPlayer = currentPlayer == player1 ? player2 : player1;
         }

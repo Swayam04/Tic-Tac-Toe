@@ -5,8 +5,8 @@ import org.example.tictactoe.entities.board.Cell;
 import org.example.tictactoe.entities.board.CellState;
 import org.example.tictactoe.entities.game.Move;
 import org.example.tictactoe.entities.players.BotPlayer;
+import org.example.tictactoe.strategies.WinnerChecker;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -21,14 +21,11 @@ public class EasyBotStrategy implements BotStrategy {
 
     @Override
     public Move calculateNextMove(Board board) {
-        List<Cell> emptyCells = new ArrayList<>();
-        for (List<Cell> row : board.getBoard()) {
-            for (Cell cell : row) {
-                if (cell.getState() == CellState.EMPTY) {
-                    emptyCells.add(cell);
-                }
-            }
-        }
+        List<Cell> emptyCells = board.getBoard().stream()
+                .flatMap(List::stream)
+                .filter(cell -> cell.getState() == CellState.EMPTY)
+                .toList();
+
         if (!emptyCells.isEmpty()) {
             Cell randomCell = emptyCells.get(random.nextInt(emptyCells.size()));
             return new Move(randomCell, botPlayer);

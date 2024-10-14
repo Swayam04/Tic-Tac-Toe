@@ -1,7 +1,7 @@
-package org.example.tictactoe.Views;
+package org.example.tictactoe.views;
 
 import org.example.tictactoe.controllers.TicTacToeController;
-import org.example.tictactoe.Views.Enums.StartMenuOption;
+import org.example.tictactoe.views.Enums.StartMenuOption;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

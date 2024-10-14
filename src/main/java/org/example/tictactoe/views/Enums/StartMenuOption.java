@@ -1,4 +1,4 @@
-package org.example.tictactoe.Views.Enums;
+package org.example.tictactoe.views.Enums;
 
 public enum StartMenuOption {
     START_GAME(1),

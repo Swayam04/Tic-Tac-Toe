@@ -1,4 +1,4 @@
-package org.example.tictactoe.Views;
+package org.example.tictactoe.views;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
