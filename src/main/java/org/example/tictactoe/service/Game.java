@@ -1,27 +1,23 @@
 package org.example.tictactoe.service;
 
+import org.example.tictactoe.controllers.MoveController;
 import org.example.tictactoe.entities.board.Board;
 import org.example.tictactoe.entities.board.Cell;
 import org.example.tictactoe.entities.board.CellState;
 import org.example.tictactoe.entities.game.GameState;
 import org.example.tictactoe.entities.game.Move;
 import org.example.tictactoe.entities.players.BotPlayer;
-import org.example.tictactoe.strategies.WinnerChecker;
+import org.example.tictactoe.strategies.StateChecker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     private final Board board;
-    private final List<Move> moves;
     private GameState state;
-    private final WinnerChecker winnerChecker;
 
     public Game() {
         this.board = new Board();
         this.state = GameState.In_Progress;
-        this.winnerChecker = new WinnerChecker();
-        this.moves = new ArrayList<>();
     }
 
     public void printBoard() {
@@ -30,34 +26,35 @@ public class Game {
     }
 
     public boolean isValidMove(Move move) {
-        int row = move.cell().getRow();
-        int column = move.cell().getColumn();
+        int row = move.getCell().getRow();
+        int column = move.getCell().getColumn();
 
         if (row < board.getSize() && column < board.getSize()) {
-            return move.cell().getState() == CellState.EMPTY;
+            return move.getCell().getState() == CellState.EMPTY;
         }
 
         return  false;
     }
 
     public boolean checkWinner(Move move) {
-        return winnerChecker.checkWinner(this.board, move.getCell(), move.getPlayer().getSymbol(),false);
+        return StateChecker.checkWinner(board, move.getPlayer().getSymbol());
+    }
+
+    public boolean checkDraw() {
+        return StateChecker.checkDraw(board);
     }
 
     public void makePlayerMove(Move move) {
-        Cell cell = move.getCell();
-        cell.setPlayer(move.getPlayer());
-        cell.setState(CellState.FILLED);
-        moves.add(move);
+        MoveController.makeMove(move);
         if (checkWinner(move)) {
             state = GameState.Win;
-        } else if (moves.size() == this.board.getSize() * this.board.getSize()) {
+        } else if (checkDraw()) {
             state = GameState.Draw;
         }
     }
 
     public void makeBotMove(BotPlayer botPlayer) {
-        Move move = botPlayer.getStrategy(winnerChecker).calculateNextMove(this.board);
+        Move move = botPlayer.getStrategy().calculateNextMove(this.board);
         makePlayerMove(move);
     }
 

@@ -5,7 +5,6 @@ import org.example.tictactoe.entities.board.Cell;
 import org.example.tictactoe.entities.board.CellState;
 import org.example.tictactoe.entities.game.Move;
 import org.example.tictactoe.entities.players.BotPlayer;
-import org.example.tictactoe.strategies.WinnerChecker;
 
 import java.util.List;
 import java.util.Random;

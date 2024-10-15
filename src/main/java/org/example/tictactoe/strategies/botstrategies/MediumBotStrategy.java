@@ -1,24 +1,24 @@
 package org.example.tictactoe.strategies.botstrategies;
 
+import org.example.tictactoe.controllers.MoveController;
 import org.example.tictactoe.entities.board.Board;
 import org.example.tictactoe.entities.board.Cell;
 import org.example.tictactoe.entities.board.CellState;
 import org.example.tictactoe.entities.game.Move;
 import org.example.tictactoe.entities.game.Symbol;
 import org.example.tictactoe.entities.players.BotPlayer;
-import org.example.tictactoe.strategies.WinnerChecker;
+import org.example.tictactoe.entities.players.HumanPlayer;
+import org.example.tictactoe.strategies.StateChecker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MediumBotStrategy implements BotStrategy {
     private final BotPlayer botPlayer;
-    private final WinnerChecker winnerChecker;
     private final EasyBotStrategy easyBotStrategy;
 
-    public MediumBotStrategy(BotPlayer botPlayer, WinnerChecker winnerChecker, EasyBotStrategy easyBotStrategy) {
+    public MediumBotStrategy(BotPlayer botPlayer, EasyBotStrategy easyBotStrategy) {
         this.botPlayer = botPlayer;
-        this.winnerChecker = winnerChecker;
         this.easyBotStrategy = easyBotStrategy;
     }
 
@@ -50,11 +50,19 @@ public class MediumBotStrategy implements BotStrategy {
     }
 
     private boolean isWinningMove(Board board, Cell cell) {
-        return winnerChecker.checkWinner(board, cell, botPlayer.getSymbol(), true);
+        Move tempMove = new Move(cell, botPlayer);
+        MoveController.makeMove(tempMove);
+        boolean isWin = StateChecker.checkWinner(board, botPlayer.getSymbol());
+        MoveController.undoMove(tempMove);
+        return isWin;
     }
 
     private boolean isBlockingMove(Board board, Cell cell) {
         Symbol opponentSymbol = botPlayer.getSymbol() == Symbol.X ? Symbol.O : Symbol.X;
-        return winnerChecker.checkWinner(board, cell, opponentSymbol, true);
+        Move tempMove = new Move(cell, new HumanPlayer(opponentSymbol, "TempPlayer"));
+        MoveController.makeMove(tempMove);
+        boolean isBlocking = StateChecker.checkWinner(board, opponentSymbol);
+        MoveController.undoMove(tempMove);
+        return isBlocking;
     }
 }

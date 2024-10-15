@@ -1,7 +1,6 @@
 package org.example.tictactoe.entities.players;
 
 import org.example.tictactoe.entities.game.Symbol;
-import org.example.tictactoe.strategies.WinnerChecker;
 import org.example.tictactoe.strategies.botstrategies.BotStrategy;
 import org.example.tictactoe.strategies.botstrategies.BotStrategyFactory;
 
@@ -31,7 +30,7 @@ public class BotPlayer implements  Player {
         return  this.difficulty;
     }
 
-    public BotStrategy getStrategy(WinnerChecker winnerChecker) {
-        return BotStrategyFactory.createBotStrategy(this, winnerChecker);
+    public BotStrategy getStrategy() {
+        return BotStrategyFactory.createBotStrategy(this);
     }
 }
