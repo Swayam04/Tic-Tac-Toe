@@ -34,9 +34,9 @@ public class HardBotStrategy implements BotStrategy {
 
     private int[] minimax(Board board, int depth, Player currentPlayer, int alpha, int beta) {
         List<Cell> emptyCells = new ArrayList<>();
-        for(List<Cell> row : board.getBoard()) {
-            for(Cell cell : row) {
-                if(cell.getState() == CellState.EMPTY) {
+        for (List<Cell> row : board.getBoard()) {
+            for (Cell cell : row) {
+                if (cell.getState() == CellState.EMPTY) {
                     emptyCells.add(cell);
                 }
             }
@@ -54,33 +54,41 @@ public class HardBotStrategy implements BotStrategy {
             Move tempMove = new Move(cell, currentPlayer);
             MoveController.makeMove(tempMove);
 
-            int[] result = minimax(board, depth + 1,
-                    currentPlayer == maximizingPlayer ? minimizingPlayer : maximizingPlayer, alpha, beta);
-            int adjustedScore = result[0];
-            if (adjustedScore == 0) {
-                int openPaths = countOpenPaths(board, cell.getRow(), cell.getColumn(), currentPlayer.getSymbol());
-                adjustedScore += (currentPlayer == maximizingPlayer) ? openPaths * (board.getSize() - depth)
-                        : -openPaths * depth;
-            }
-
-            if ((currentPlayer == maximizingPlayer && adjustedScore > bestScore) ||
-                    (currentPlayer == minimizingPlayer && adjustedScore < bestScore)) {
-                bestScore = adjustedScore;
-                row = cell.getRow();
-                col = cell.getColumn();
-                if (currentPlayer == maximizingPlayer) {
-                    alpha = Math.max(alpha, adjustedScore);
-                } else {
-                    beta = Math.min(beta, adjustedScore);
+            try {
+                int[] result = minimax(board, depth + 1,
+                        currentPlayer == maximizingPlayer ? minimizingPlayer : maximizingPlayer, alpha, beta);
+                int adjustedScore = result[0];
+                if (adjustedScore == 0) {
+                    int openPaths = countOpenPaths(board, cell.getRow(), cell.getColumn(), currentPlayer.getSymbol());
+                    adjustedScore += (currentPlayer == maximizingPlayer) ? openPaths * (board.getSize() - depth)
+                            : -openPaths * depth;
                 }
-            }
-            MoveController.undoMove(tempMove);
-            if(alpha >= beta) {
-                break;
+                if (currentPlayer == maximizingPlayer) {
+                    if (adjustedScore > bestScore) {
+                        bestScore = adjustedScore;
+                        row = cell.getRow();
+                        col = cell.getColumn();
+                    }
+                    alpha = Math.max(alpha, bestScore);
+                } else {
+                    if (adjustedScore < bestScore) {
+                        bestScore = adjustedScore;
+                        row = cell.getRow();
+                        col = cell.getColumn();
+                    }
+                    beta = Math.min(beta, bestScore);
+                }
+                if (alpha >= beta) {
+                    break;
+                }
+            } finally {
+                MoveController.undoMove(tempMove);
             }
         }
         return new int[]{bestScore, row, col};
     }
+
+
 
     private int countOpenPaths(Board board, int row, int col, Symbol symbol) {
         int count = 0;
