@@ -66,4 +66,8 @@ public class Game {
     public List<List<Cell>> getBoard() {
         return board.getBoard();
     }
+
+    public int getBoardSize() {
+        return board.getSize();
+    }
 }

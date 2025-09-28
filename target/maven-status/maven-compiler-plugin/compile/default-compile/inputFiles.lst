@@ -20,6 +20,8 @@
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/strategies/botstrategies/EasyBotStrategy.java
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/strategies/botstrategies/HardBotStrategy.java
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/strategies/botstrategies/MediumBotStrategy.java
+/home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/ui/MainApp.java
+/home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/ui/TicTacToeFX.java
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/views/Enums/PlayerOption.java
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/views/Enums/StartMenuOption.java
 /home/runner/work/Tic-Tac-Toe/Tic-Tac-Toe/src/main/java/org/example/tictactoe/views/GamePlayView.java
