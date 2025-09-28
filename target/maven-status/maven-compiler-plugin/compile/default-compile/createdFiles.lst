@@ -12,14 +12,14 @@ org/example/tictactoe/strategies/botstrategies/BotStrategyFactory.class
 org/example/tictactoe/views/PlayerSelectionView.class
 org/example/tictactoe/entities/game/GameState.class
 org/example/tictactoe/entities/board/Board.class
-org/example/tictactoe/strategies/botstrategies/BotStrategyFactory$1.class
-org/example/tictactoe/strategies/botstrategies/BotStrategy.class
 org/example/tictactoe/entities/players/HumanPlayer.class
+org/example/tictactoe/strategies/botstrategies/BotStrategy.class
+org/example/tictactoe/strategies/botstrategies/BotStrategyFactory$1.class
 org/example/tictactoe/TicTacToe.class
 org/example/tictactoe/views/Enums/StartMenuOption.class
 org/example/tictactoe/strategies/Diagonal.class
-org/example/tictactoe/strategies/botstrategies/EasyBotStrategy.class
 org/example/tictactoe/entities/players/Player.class
+org/example/tictactoe/strategies/botstrategies/EasyBotStrategy.class
 org/example/tictactoe/controllers/TicTacToeController.class
 org/example/tictactoe/entities/board/Cell.class
 org/example/tictactoe/entities/players/Difficulty.class
