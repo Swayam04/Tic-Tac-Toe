@@ -1,19 +1,21 @@
-# TicTacToe Console Game with AI
+# TicTacToe JavaFX Desktop Game with AI
 
 ## Description
 
-This project implements a console-based TicTacToe game with both Player vs Player (PvP) and Player vs Bot modes. The game is designed with Object-Oriented Design (OOD) principles and utilizes design patterns such as Strategy and Factory.
+This project implements a JavaFX desktop TicTacToe game with both Player vs Player (PvP) and Player vs Bot modes. The game features a modern graphical user interface and is designed with Object-Oriented Design (OOD) principles, utilizing design patterns such as Strategy and Factory.
 
 ## Features
 
-- Console-based interface
+- JavaFX desktop interface with intuitive 3x3 grid
 - Two game modes:
-    - Player vs Player (PvP)
-    - Player vs Bot
+    - Human vs Human (PvP)
+    - Human vs Bot (Easy/Medium/Hard difficulty)
 - Three bot difficulty levels:
-    1. Easy: Random move selection
-    2. Medium: Heuristic-based move selection
-    3. Hard: Minimax algorithm with alpha-beta pruning
+    1. **Easy**: Random move selection
+    2. **Medium**: Heuristic-based move selection
+    3. **Hard**: Minimax algorithm with alpha-beta pruning
+- Non-blocking bot move execution with background thread processing
+- Real-time status updates and game state management
 - Implemented using OOD principles and design patterns
 
 ### Bot Difficulty Levels
@@ -34,29 +36,81 @@ This project implements a console-based TicTacToe game with both Player vs Playe
 
 ### Prerequisites
 
-- Java 21 or higher
+- Java 17 or higher
+- JavaFX runtime (included with OpenJDK distributions or available separately)
 
-### Steps
+### Development Setup
 
-1. Download the JAR file:
-   [Download TicTacToe.jar](https://drive.google.com/file/d/1iwFzDdwN-qED_9ITa1n59PgG3rmyX4pJ/view?usp=drive_link)
-
-2. Open a terminal or command prompt
-
-3. Navigate to the directory containing the downloaded JAR file
-
-4. Run the game using the following command:
-
-   On Windows/macOS/Linux:
-   ```
-   java -jar TicTacToe-1.0-SNAPSHOT.jar
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Tic-Tac-Toe
    ```
 
+2. Build and run the application:
+   ```bash
+   # Development run (recommended)
+   mvn -q -DskipTests javafx:run
+   
+   # Or compile and package
+   mvn clean package
+   ```
+
+### Running the Application
+
+#### Development Mode
+```bash
+mvn -q -DskipTests javafx:run
+```
+
+#### Packaged JAR
+```bash
+# Build the JAR
+mvn clean package
+
+# Run with JavaFX on module path (Java 17+)
+java --module-path /path/to/javafx/lib --add-modules javafx.controls -jar target/TicTacToe-1.0-SNAPSHOT.jar
+
+# Note: Running the JAR requires JavaFX on the classpath unless using jpackage
+```
+
+#### Native Distribution (Recommended for End Users)
+Create native installers using jpackage:
+
+**macOS:**
+```bash
+jpackage --input target/libs --main-jar TicTacToe-1.0-SNAPSHOT.jar --main-class org.example.tictactoe.ui.MainApp --name "TicTacToe" --type dmg
+```
+
+**Windows:**
+```bash
+jpackage --input target/libs --main-jar TicTacToe-1.0-SNAPSHOT.jar --main-class org.example.tictactoe.ui.MainApp --name "TicTacToe" --type exe
+```
+
+**Linux:**
+```bash
+jpackage --input target/libs --main-jar TicTacToe-1.0-SNAPSHOT.jar --main-class org.example.tictactoe.ui.MainApp --name "TicTacToe" --type deb
+```
 
 ## Usage
 
-1. Launch the game using the command provided in the Installation section
-2. Follow the on-screen prompts to:
-    - Select game mode (PvP or Player vs Bot)
-    - Choose bot difficulty (if applicable)
-    - Make moves by entering the corresponding cell number
+1. Launch the application using one of the methods above
+2. The game window will open with:
+   - Mode selection buttons (Human vs Human, Human vs Bot)
+   - Bot difficulty selection (Easy/Medium/Hard) via dropdown
+   - 3x3 game board grid
+   - Status display and New Game button
+
+3. Game Flow:
+   - Click "Human vs Human" for two-player mode
+   - Click "Human vs Bot" dropdown and select difficulty for single-player mode
+   - Click on any empty cell to make a move
+   - The game automatically handles turn switching and win/draw detection
+   - Bot moves are calculated in the background with visual feedback
+   - Click "New Game" to restart at any time
+
+## JavaFX Runtime Notes
+
+- For development: Use `mvn javafx:run` which handles JavaFX modules automatically
+- For packaged JAR: JavaFX must be on the classpath or module path
+- For distribution: Use `jpackage` to create native installers with bundled runtime

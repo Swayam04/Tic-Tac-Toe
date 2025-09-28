@@ -20,20 +20,8 @@ public class Game {
         this.state = GameState.In_Progress;
     }
 
-    public void printBoard() {
-        board.displayBoard();
-        System.out.println();
-    }
-
     public boolean isValidMove(Move move) {
-        int row = move.getCell().getRow();
-        int column = move.getCell().getColumn();
-
-        if (row < board.getSize() && column < board.getSize()) {
-            return move.getCell().getState() == CellState.EMPTY;
-        }
-
-        return  false;
+        return move.getCell().getState() == CellState.EMPTY;
     }
 
     public boolean checkWinner(Move move) {
@@ -65,5 +53,13 @@ public class Game {
 
     public List<List<Cell>> getBoard() {
         return board.getBoard();
+    }
+
+    public Board getBoardObject() {
+        return board;
+    }
+
+    public int getBoardSize() {
+        return board.getSize();
     }
 }
